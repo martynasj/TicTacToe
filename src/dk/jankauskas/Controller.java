@@ -5,13 +5,15 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.TilePane;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Controller {
 
     @FXML
-    private GridPane gridButtons;
+    private TilePane tilePane;
 
     @FXML
     private Button cell00;
@@ -44,34 +46,24 @@ public class Controller {
 
     public void initialize() {
 
-        // TODO pabaigti su mygtukais!
-        // Create buttons and add to grid
-        Button[] buttons = new Button[9];
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                buttons[i][j] = new Button();
-                // Set Id for every button to be it's position
-                gridButtons.add(buttons[j], i, j);
-            }
-        }
+        ArrayList<Button> buttons = new ArrayList<>();
 
+        // Create buttons and add array list and tile pane
         for (int i = 0; i < 9; i++) {
-
-        }
-
-        // Set Id for every button to be it's position
-        for (Button[] line : buttons) {
-            for (Button button : line) {
-                button.setOnAction(event -> {
-                    shoot(Integer.parseInt(button.getId()));
-                });
-            }
+            Button btn = new Button();
+            btn.setId(Integer.toString(i));
+            btn.setText(btn.getId());
+            // Buttons expand in size according to Tile Pane's tile size
+            btn.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+            tilePane.getChildren().add(btn);
+            buttons.add(btn);
         }
 
         setBoard();
 
     }
 
+    // this initialises the board
     public void setBoard() {
         this.board = new Board();
     }
