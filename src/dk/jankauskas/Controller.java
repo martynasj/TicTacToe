@@ -47,9 +47,11 @@ public class Controller {
     public void initialize() {
 
         ArrayList<Button> buttons = new ArrayList<>();
+        // Construct a board
+        this.board = new Board();
 
         // Create buttons and add array list and tile pane
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < board.getSize(); i++) {
             Button btn = new Button();
             btn.setId(Integer.toString(i));
             btn.setText(btn.getId());
@@ -59,17 +61,16 @@ public class Controller {
             buttons.add(btn);
         }
 
-        setBoard();
+        for (Button btn : buttons) {
+            btn.setOnAction(event -> {
+                shoot(Integer.parseInt(btn.getId()));
+            });
+        }
 
-    }
-
-    // this initialises the board
-    public void setBoard() {
-        this.board = new Board();
     }
 
     private void shoot(int position) {
-//        board.markCell(position);
+        board.markCell(position);
         System.out.println("Shooting at: " + position);
     }
 
