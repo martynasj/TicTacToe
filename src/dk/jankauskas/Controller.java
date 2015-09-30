@@ -43,35 +43,47 @@ public class Controller {
     private Button cell22;
 
     Board board;
+    ArrayList<Button> buttons;
 
     public void initialize() {
 
-        ArrayList<Button> buttons = new ArrayList<>();
-        // Construct a board
+        buttons = new ArrayList<>();
+        // Construct a board with default size
+        // todo board size select option
         this.board = new Board();
 
         // Create buttons and add array list and tile pane
         for (int i = 0; i < board.getSize(); i++) {
             Button btn = new Button();
             btn.setId(Integer.toString(i));
-            btn.setText(btn.getId());
+            btn.setText(board.getCellValue(i) + "");
             // Buttons expand in size according to Tile Pane's tile size
             btn.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
             tilePane.getChildren().add(btn);
             buttons.add(btn);
+            setButtonsDisabled();
         }
 
         for (Button btn : buttons) {
             btn.setOnAction(event -> {
-                shoot(Integer.parseInt(btn.getId()));
+                btn.setText("1");
+                shoot(btn, Integer.parseInt(btn.getId()));
             });
         }
 
     }
 
-    private void shoot(int position) {
-        board.markCell(position);
-        System.out.println("Shooting at: " + position);
+    private void shoot(Button btn, int position) {
+        setButtonsDisabled();
+        board.setCellValue(position);
+    }
+
+    private void setButtonsDisabled() {
+        for (Button btn : buttons) {
+            if (btn.getText().equals(Integer.toString(1))) {
+                btn.setDisable(true);
+            }
+        }
     }
 
 }
