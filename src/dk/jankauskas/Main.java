@@ -10,6 +10,7 @@ import java.util.Arrays;
 
 public class Main extends Application {
 
+    static Receiver receiver;
     int[] board = new int[9];
 
     @Override
@@ -26,7 +27,8 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         int port = Integer.parseInt(args[0]);
-        Thread networkThread = new Thread(new Receiver(port));
+        receiver = new Receiver(port);
+        Thread networkThread = new Thread(receiver);
         networkThread.start();
         launch(args);
     }

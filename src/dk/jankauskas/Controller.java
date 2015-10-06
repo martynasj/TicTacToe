@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.TilePane;
 
+import java.net.*;
 import java.util.ArrayList;
 
 public class Controller {
@@ -13,6 +14,7 @@ public class Controller {
 
     Board board;
     ArrayList<Button> buttons;
+    private int sendPort;
 
     public void initialize() {
 
@@ -43,8 +45,9 @@ public class Controller {
     }
 
     private void shoot(Button btn, int position) {
-        setButtonsDisabled();
-        board.setCellValue(position);
+        sendTest("spaudziam mygtuka");
+//        setButtonsDisabled();
+//        board.setCellValue(position);
     }
 
     private void setButtonsDisabled() {
@@ -55,4 +58,26 @@ public class Controller {
         }
     }
 
+    private void sendTest(String message) {
+        try {
+            DatagramSocket socket = new DatagramSocket();
+            InetAddress address = InetAddress.getLocalHost();
+            int port = getSendPort();
+            byte[] buf;
+            buf = message.getBytes();
+            System.out.println(buf.length);
+            DatagramPacket packet = new DatagramPacket(buf, buf.length, address, port);
+            socket.send(packet);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    // TODO could be improved
+    public int getSendPort() {
+        if (Main.receiver.getPort() == 5000) {
+            return 6000;
+        } else return 5000;
+    }
 }

@@ -38,4 +38,8 @@ public class Receiver implements Runnable {
             e.printStackTrace();
         }
     }
+
+    public int getPort() {
+        return port;
+    }
 }
