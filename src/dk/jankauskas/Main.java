@@ -25,6 +25,9 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
+        int port = Integer.parseInt(args[0]);
+        Thread networkThread = new Thread(new Receiver(port));
+        networkThread.start();
         launch(args);
     }
 }

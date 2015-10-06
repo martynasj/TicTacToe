@@ -1,46 +1,15 @@
 package dk.jankauskas;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.TilePane;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Controller {
 
     @FXML
     private TilePane tilePane;
-
-    @FXML
-    private Button cell00;
-
-    @FXML
-    private Button cell01;
-
-    @FXML
-    private Button cell02;
-
-    @FXML
-    private Button cell10;
-
-    @FXML
-    private Button cell11;
-
-    @FXML
-    private Button cell12;
-
-    @FXML
-    private Button cell20;
-
-    @FXML
-    private Button cell21;
-
-    @FXML
-    private Button cell22;
 
     Board board;
     ArrayList<Button> buttons;
