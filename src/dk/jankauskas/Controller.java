@@ -1,89 +1,107 @@
 package dk.jankauskas;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.TilePane;
 
+import java.net.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Controller {
 
     @FXML
     private TilePane tilePane;
 
-    @FXML
-    private Button cell00;
-
-    @FXML
-    private Button cell01;
-
-    @FXML
-    private Button cell02;
-
-    @FXML
-    private Button cell10;
-
-    @FXML
-    private Button cell11;
-
-    @FXML
-    private Button cell12;
-
-    @FXML
-    private Button cell20;
-
-    @FXML
-    private Button cell21;
-
-    @FXML
-    private Button cell22;
-
     Board board;
     ArrayList<Button> buttons;
+    private int sendPort;
+    private Player player;
 
     public void initialize() {
 
-        buttons = new ArrayList<>();
-        // Construct a board with default size
+        Receiver.setController(this);
+        // gets the board from the Main class
         // todo board size select option
-        this.board = new Board();
+        this.board = Main.getBoard();
+        this.player = Main.getPlayer();
+        createButtons();
 
-        // Create buttons and add array list and tile pane
-        for (int i = 0; i < board.getSize(); i++) {
-            Button btn = new Button();
-            btn.setId(Integer.toString(i));
-            btn.setText(board.getCellValue(i) + "");
-            // Buttons expand in size according to Tile Pane's tile size
-            btn.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-            tilePane.getChildren().add(btn);
-            buttons.add(btn);
-            setButtonsDisabled();
-        }
+        // =================== End of initial methods =================== //
 
+
+        // Executes every time there's a change in the cells array list
+        board.getCells().addListener((ListChangeListener<String>) (c) -> {
+            while (c.next()) {
+                recalculateButtons();
+            }
+        });
+
+
+        // setOnAction on all buttons
         for (Button btn : buttons) {
             btn.setOnAction(event -> {
-                btn.setText("1");
-                shoot(btn, Integer.parseInt(btn.getId()));
+                board.setCellValue(Integer.parseInt(btn.getId()), player.getPlayerSymbol());
+                sendShoot(btn.getId());
+//        setButtonsDisabled(true);
             });
         }
 
     }
 
-    private void shoot(Button btn, int position) {
-        setButtonsDisabled();
-        board.setCellValue(position);
-    }
-
-    private void setButtonsDisabled() {
-        for (Button btn : buttons) {
-            if (btn.getText().equals(Integer.toString(1))) {
-                btn.setDisable(true);
-            }
+    // Create buttons and adds to the tile pane and button array list
+    // each button has the same ID as it's position in the array
+    private void createButtons() {
+        buttons = new ArrayList<>();
+        for (int i = 0; i < board.getSize(); i++) {
+            Button btn = new Button();
+            btn.setId(Integer.toString(i));
+            // Buttons expand in size according to Tile Pane's tile size
+            btn.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+            tilePane.getChildren().add(btn);
+            buttons.add(btn);
+            setButtonsDisabled(false);
         }
     }
 
+    private void setButtonsDisabled(boolean disabled) {
+        for (Button btn : buttons) {
+            btn.setDisable(disabled);
+        }
+    }
+
+    // Recalculates all buttons based on board cells arraylist
+    public void recalculateButtons() {
+        for (int i = 0; i < board.getSize(); i++) {
+            String cellMark = board.getCellValue(i);
+            buttons.get(i).setText(cellMark);
+        }
+    }
+
+    //=================================================================
+    //                      Send methods
+    //=================================================================
+
+    private void sendShoot(String btnId) {
+        try {
+            DatagramSocket socket = new DatagramSocket();
+            InetAddress address = InetAddress.getLocalHost();
+            int port = getSendPort();
+
+            byte[] buf;
+            buf = ("SHOOT " + btnId).getBytes();
+            DatagramPacket packet = new DatagramPacket(buf, buf.length, address, port);
+            socket.send(packet);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    // TODO could be improved
+    public int getSendPort() {
+        if (Main.receiver.getPort() == 5000) {
+            return 6000;
+        } else return 5000;
+    }
 }
