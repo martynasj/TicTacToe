@@ -49,6 +49,7 @@ public class Receiver implements Runnable {
 
     // todo: every time msg received, refresh the board
     private void readMessage(byte[] data) {
+
         String receivedString = new String(data).trim();   // trims the empty members of array
         System.out.println("Received: " + receivedString);
         String[] msg = receivedString.split(" ");  // splits received string into tokens and stores in array
@@ -57,10 +58,8 @@ public class Receiver implements Runnable {
                 int position = Integer.parseInt(msg[1]);
                 // Otherwise I get "not in FX thread exception..."
                 Platform.runLater(() -> {
-                    board.setCellValue(position);
+                    board.setCellValue(position, Main.getOpponent().getPlayerSymbol());
                 });
-
-//                controller.recalculateButtons();
         }
     }
 

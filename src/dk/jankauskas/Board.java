@@ -22,8 +22,8 @@ public class Board {
         System.out.println("New board is constructed with size: " + cells.size());
     }
 
-    public void setCellValue(int cellNumber) {
-        cells.set(cellNumber, "X");
+    public void setCellValue(int cellNumber, String playerSymbol) {
+        cells.set(cellNumber, playerSymbol);
     }
 
     public ObservableList<String> getCells() {

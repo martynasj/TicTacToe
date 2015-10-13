@@ -16,6 +16,7 @@ public class Controller {
     Board board;
     ArrayList<Button> buttons;
     private int sendPort;
+    private Player player;
 
     public void initialize() {
 
@@ -23,6 +24,7 @@ public class Controller {
         // gets the board from the Main class
         // todo board size select option
         this.board = Main.getBoard();
+        this.player = Main.getPlayer();
         createButtons();
 
         // =================== End of initial methods =================== //
@@ -39,7 +41,7 @@ public class Controller {
         // setOnAction on all buttons
         for (Button btn : buttons) {
             btn.setOnAction(event -> {
-                board.setCellValue(Integer.parseInt(btn.getId()));
+                board.setCellValue(Integer.parseInt(btn.getId()), player.getPlayerSymbol());
                 sendShoot(btn.getId());
 //        setButtonsDisabled(true);
             });
