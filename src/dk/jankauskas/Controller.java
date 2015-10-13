@@ -20,37 +20,40 @@ public class Controller {
     public void initialize() {
 
         Receiver.setController(this);
-
         // gets the board from the Main class
         // todo board size select option
         this.board = Main.getBoard();
+        createButtons();
+
+        // =================== End of initial methods =================== //
+
+
+        // Executes every time there's a change in the cells array list
         board.getCells().addListener((ListChangeListener<String>) (c) -> {
             while (c.next()) {
-                System.out.println("changed: " + c.wasReplaced());
                 recalculateButtons();
             }
         });
 
-        createButtons();
 
         // setOnAction on all buttons
         for (Button btn : buttons) {
             btn.setOnAction(event -> {
-//                sendShoot(btn.getId());
-//        setButtonsDisabled(true);
                 board.setCellValue(Integer.parseInt(btn.getId()));
+                sendShoot(btn.getId());
+//        setButtonsDisabled(true);
             });
         }
 
     }
 
     // Create buttons and adds to the tile pane and button array list
+    // each button has the same ID as it's position in the array
     private void createButtons() {
         buttons = new ArrayList<>();
         for (int i = 0; i < board.getSize(); i++) {
             Button btn = new Button();
             btn.setId(Integer.toString(i));
-            btn.setText(board.getCellValue(i) + "");
             // Buttons expand in size according to Tile Pane's tile size
             btn.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
             tilePane.getChildren().add(btn);

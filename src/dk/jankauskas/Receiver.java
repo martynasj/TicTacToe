@@ -1,5 +1,7 @@
 package dk.jankauskas;
 
+import javafx.application.Platform;
+
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -20,10 +22,9 @@ public class Receiver implements Runnable {
     public Receiver(int port) {
         try {
             this.board = Main.getBoard();
-//            this.controller = Main.getController();
             this.port = port;
             this.socket = new DatagramSocket(port);
-            this.bufferSize = 10;
+            this.bufferSize = 1024;
             System.out.println("Socket created on port: " + port);
         } catch (SocketException e) {
             e.printStackTrace();
@@ -48,22 +49,23 @@ public class Receiver implements Runnable {
 
     // todo: every time msg received, refresh the board
     private void readMessage(byte[] data) {
-        String message = new String(data).trim();
-        String confirmText = "Received: ";
-        String[] msg = message.split(" ");
-        System.out.println(confirmText += message);
-        System.out.println("Split message: " + Arrays.toString(msg));
+        String receivedString = new String(data).trim();   // trims the empty members of array
+        System.out.println("Received: " + receivedString);
+        String[] msg = receivedString.split(" ");  // splits received string into tokens and stores in array
         switch (msg[0]) {
             case "SHOOT" :
                 int position = Integer.parseInt(msg[1]);
-                System.out.println(position);
-                board.setCellValue(position);
-                controller.recalculateButtons();
+                // Otherwise I get "not in FX thread exception..."
+                Platform.runLater(() -> {
+                    board.setCellValue(position);
+                });
+
+//                controller.recalculateButtons();
         }
     }
 
-    public static void setController(Controller controlleris) {
-        controller = controlleris;
+    public static void setController(Controller c) {
+        controller = c;
     }
 
     public int getPort() {

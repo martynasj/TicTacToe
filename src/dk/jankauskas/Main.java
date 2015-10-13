@@ -19,13 +19,19 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         FXMLLoader loader = new FXMLLoader(getClass().getResource("sample.fxml"));
         Parent root = loader.load();
-//        this.controller = loader.getController();
+        this.controller = loader.getController();
         primaryStage.setTitle(appTitle);
         primaryStage.setScene(new Scene(root));
         // Not resizable window
         primaryStage.setResizable(false);
         primaryStage.show();
 
+    }
+
+    // close all threads
+    @Override
+    public void stop() {
+        System.exit(0);
     }
 
     public static void main(String[] args) {

@@ -23,7 +23,6 @@ public class Board {
     }
 
     public void setCellValue(int cellNumber) {
-        System.out.println("value of the cell: " + cellNumber);
         cells.set(cellNumber, "X");
     }
 
