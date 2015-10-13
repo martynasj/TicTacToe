@@ -11,13 +11,16 @@ import java.util.Arrays;
 public class Main extends Application {
 
     static Receiver receiver;
-    int[] board = new int[9];
+    private static Board board;
+    static String appTitle;
+    private static Controller controller;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        FXMLLoader loader = new FXMLLoader();
-        Parent root = loader.load(getClass().getResource("sample.fxml"));
-        primaryStage.setTitle("Hello World");
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("sample.fxml"));
+        Parent root = loader.load();
+//        this.controller = loader.getController();
+        primaryStage.setTitle(appTitle);
         primaryStage.setScene(new Scene(root));
         // Not resizable window
         primaryStage.setResizable(false);
@@ -26,10 +29,20 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
+        board = new Board();
         int port = Integer.parseInt(args[0]);
+        appTitle = args[1];
         receiver = new Receiver(port);
         Thread networkThread = new Thread(receiver);
         networkThread.start();
         launch(args);
+    }
+
+    public static Board getBoard() {
+        return board;
+    }
+
+    public static Controller getController() {
+        return controller;
     }
 }
