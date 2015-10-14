@@ -16,4 +16,5 @@ public class Player {
     public void setPlayerSymbol(String playerSymbol) {
         this.playerSymbol = playerSymbol;
     }
+
 }

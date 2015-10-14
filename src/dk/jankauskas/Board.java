@@ -23,7 +23,11 @@ public class Board {
     }
 
     public void setCellValue(int cellNumber, String playerSymbol) {
-        cells.set(cellNumber, playerSymbol);
+        if (cells.get(cellNumber) == null) {
+            cells.set(cellNumber, playerSymbol);
+        } else {
+            System.out.println("This cell is already occupied");
+        }
     }
 
     public ObservableList<String> getCells() {
