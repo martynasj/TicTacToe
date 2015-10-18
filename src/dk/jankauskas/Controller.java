@@ -33,7 +33,9 @@ public class Controller {
         // Executes every time there's a change in the cells array list
         board.getCells().addListener((ListChangeListener<String>) (c) -> {
             while (c.next()) {
+                // win can only occur after last move, so it's enough to check based on the last position placed
                 recalculateButtons();
+                checkWin();
             }
         });
 
@@ -43,10 +45,21 @@ public class Controller {
             btn.setOnAction(event -> {
                 board.setCellValue(Integer.parseInt(btn.getId()), player.getPlayerSymbol());
                 sendShoot(btn.getId());
-//        setButtonsDisabled(true);
+                setButtonsDisabled(true);
             });
         }
 
+    }
+
+    // todo
+    private void checkWin() {
+        if (board.isFull()) {
+            System.out.println("End of game!");
+        }
+        // ========== Check rows ========== //
+        if (board.getCells().get(0).equals(board.getCells().get(1)) && board.getCells().get(1).equals(board.getCells().get(2))) {
+            System.out.println("1st row won by: " + board.getCells().get(0));
+        }
     }
 
     // Create buttons and adds to the tile pane and button array list
@@ -64,7 +77,7 @@ public class Controller {
         }
     }
 
-    private void setButtonsDisabled(boolean disabled) {
+    public void setButtonsDisabled(boolean disabled) {
         for (Button btn : buttons) {
             btn.setDisable(disabled);
         }
@@ -97,6 +110,7 @@ public class Controller {
         }
 
     }
+
 
     // TODO could be improved
     public int getSendPort() {

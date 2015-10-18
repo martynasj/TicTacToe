@@ -59,6 +59,7 @@ public class Receiver implements Runnable {
                 // Otherwise I get "not in FX thread exception..."
                 Platform.runLater(() -> {
                     board.setCellValue(position, Main.getOpponent().getPlayerSymbol());
+                    controller.setButtonsDisabled(false);
                 });
         }
     }
