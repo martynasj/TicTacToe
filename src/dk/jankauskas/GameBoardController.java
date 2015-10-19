@@ -2,13 +2,16 @@ package dk.jankauskas;
 
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 
+import java.io.IOException;
 import java.net.*;
 import java.util.ArrayList;
 
-public class Controller {
+public class GameBoardController {
 
     @FXML
     private TilePane tilePane;
@@ -20,7 +23,7 @@ public class Controller {
 
     public void initialize() {
 
-        Receiver.setController(this);
+        Receiver.setGameBoardController(this);
         // gets the board from the Main class
         // todo board size select option
         this.board = Main.getBoard();
@@ -54,9 +57,19 @@ public class Controller {
     // todo
     private void checkWin() {
         if (board.isWon()) {
-            System.out.println("We have a winner");
+            showGameOverPane();
         } else if (board.isFull()) {
             System.out.println("It's a tie");
+        }
+    }
+
+    private void showGameOverPane() {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("GameOverPane.fxml"));
+        try {
+            Pane gameOverPane = loader.load();
+            Main.stackPane.getChildren().add(gameOverPane);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

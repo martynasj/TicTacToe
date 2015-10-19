@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
-import java.util.Arrays;
 
 public class Receiver implements Runnable {
 
@@ -14,7 +13,7 @@ public class Receiver implements Runnable {
     private int port;
     private DatagramSocket socket;
     private int bufferSize;
-    private static Controller controller;
+    private static GameBoardController gameBoardController;
     private Board board;
 
     // Sender details
@@ -59,13 +58,13 @@ public class Receiver implements Runnable {
                 // Otherwise I get "not in FX thread exception..."
                 Platform.runLater(() -> {
                     board.setCellValue(position, Main.getOpponent().getPlayerSymbol());
-                    controller.setButtonsDisabled(false);
+                    gameBoardController.setButtonsDisabled(false);
                 });
         }
     }
 
-    public static void setController(Controller c) {
-        controller = c;
+    public static void setGameBoardController(GameBoardController c) {
+        gameBoardController = c;
     }
 
     public int getPort() {

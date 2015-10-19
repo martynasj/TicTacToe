@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" style="-fx-background-color: #607D8B;" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.jankauskas.IntroPaneController">
+   <stylesheets>
+      <URL value="@css/intropane.css" />
+      <URL value="@css/common.css" />
+   </stylesheets>
+   <children>
+      <VBox layoutX="255.0" layoutY="85.0" styleClass="h1">
+         <children>
+            <Label text="TIC" />
+            <Label text="TAC" />
+            <Label text="TOE" />
+         </children>
+      </VBox>
+      <VBox alignment="CENTER" layoutX="233.0" layoutY="522.0">
+         <children>
+            <Label text="Martynas Jankauskas" />
+            <Label text="DAT14Di" />
+            <Label text="2015" />
+         </children>
+      </VBox>
+      <Button fx:id="newGameBtn" layoutX="257.0" layoutY="315.0" mnemonicParsing="false" text="New game" />
+      <Button fx:id="loadGameBtn" layoutX="255.0" layoutY="353.0" mnemonicParsing="false" text="Load game" />
+   </children>
+</AnchorPane>

@@ -2,31 +2,45 @@ package dk.jankauskas;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-import java.util.Arrays;
+import java.io.IOException;
 
 public class Main extends Application {
 
     static Receiver receiver;
     private static Board board;
     static String appTitle;
-    private static Controller controller;
+    private static GameBoardController gameBoardController;
     private static Player player;
     private static Player opponent;
 
+    static StackPane stackPane;
+
     @Override
-    public void start(Stage primaryStage) throws Exception{
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("sample.fxml"));
-        Parent root = loader.load();
-        controller = loader.getController();
-        primaryStage.setTitle(appTitle);
-        primaryStage.setScene(new Scene(root));
-        // Not resizable window
-        primaryStage.setResizable(false);
-        primaryStage.show();
+    //todo better way of changing stackpane scenes
+    public void start(Stage primaryStage) {
+        try {
+            FXMLLoader loader1 = new FXMLLoader(getClass().getResource("BorderPane.fxml"));
+            FXMLLoader loader2 = new FXMLLoader(getClass().getResource("IntroPane.fxml"));
+            BorderPane borderPane = loader1.load();
+            AnchorPane introPane = loader2.load();
+            stackPane = (StackPane) borderPane.getCenter();
+            stackPane.getChildren().add(introPane);
+            primaryStage.setTitle(appTitle);
+            Scene scene = new Scene(borderPane);
+            primaryStage.setScene(scene);
+            // Not resizable window
+            primaryStage.setResizable(false);
+            primaryStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -73,7 +87,11 @@ public class Main extends Application {
         return opponent;
     }
 
-    public static Controller getController() {
-        return controller;
+    public static void setGameBoardController(GameBoardController gameBoardController) {
+        Main.gameBoardController = gameBoardController;
+    }
+
+    public static GameBoardController getGameBoardController() {
+        return gameBoardController;
     }
 }

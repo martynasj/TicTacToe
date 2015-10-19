@@ -1,0 +1,12 @@
+.background {
+    -fx-background-color: white;
+}
+
+.h1 {
+    -fx-font-size: 40px;
+    color: white;
+}
+
+.button {
+    -fx-background-color: white;
+}

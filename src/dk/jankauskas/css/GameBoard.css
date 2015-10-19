@@ -1,0 +1,15 @@
+.background {
+    -fx-background-color: aqua;
+}
+
+.label {
+    -fx-background-color: red;
+}
+
+.button {
+    -fx-background-color: #FFFFFF;
+}
+
+.button .text {
+    -fx-font-size: 30px;
+}
