@@ -53,12 +53,10 @@ public class Controller {
 
     // todo
     private void checkWin() {
-        if (board.isFull()) {
-            System.out.println("End of game!");
-        }
-        // ========== Check rows ========== //
-        if (board.getCells().get(0).equals(board.getCells().get(1)) && board.getCells().get(1).equals(board.getCells().get(2))) {
-            System.out.println("1st row won by: " + board.getCells().get(0));
+        if (board.isWon()) {
+            System.out.println("We have a winner");
+        } else if (board.isFull()) {
+            System.out.println("It's a tie");
         }
     }
 

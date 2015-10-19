@@ -49,6 +49,35 @@ public class Board {
         return true;
     }
 
+    public boolean isWon() {
+        boolean won = false;
+        // always trows null pointer exception, because initially squares are set to be null
+        try {
+            // ========== Check rows ========== //
+            for (int i = 0; i < 3; i++) {
+                if (cells.get(i*3).equals(cells.get(i*3+1)) && cells.get(i*3+1).equals(cells.get(i*3+2))) {
+                    won = true;
+                }
+            }
+
+            // ========== Check columns ========== //
+            for (int i = 0; i < 3; i++) {
+                if (cells.get(i).equals(cells.get(i+3)) && cells.get(i+3).equals(cells.get(i+6))) {
+                    won = true;
+                }
+            }
+
+            // ========== Check diagonal ========== //
+            if ((cells.get(0).equals(cells.get(4)) && cells.get(4).equals(cells.get(8))) ||
+                    (cells.get(0).equals(cells.get(4)) && cells.get(4).equals(cells.get(8)))) {
+                won = true;
+            }
+        } catch (NullPointerException e) {
+            // do nothing
+        }
+        return won;
+    }
+
     public int getSize() {
         return cells.size();
     }
