@@ -1,3 +1,13 @@
 .anchorpane {
     -fx-background-color: aqua;
 }
+
+.menu-bar {
+    -fx-background-color: #FBC02D;
+}
+
+.button {
+    -fx-font-family: 'DejaVu Sans', Arial, Helvetica, sans-serif;
+    -fx-background-color: #FBC02D;
+    -fx-text-fill: white;
+}

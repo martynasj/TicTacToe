@@ -1,16 +1,9 @@
-.background {
-    -fx-background-color: aqua;
-}
-
-.label {
-    -fx-background-color: red;
-}
-
 .button {
     -fx-background-color: #FFFFFF;
 }
 
-.button .text {
+.button {
     -fx-font-family: Quicksand;
     -fx-font-size: 8em;
+    -fx-text-fill: #212121;
 }

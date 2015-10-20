@@ -1,3 +1,11 @@
 .h1 {
     -fx-text-fill: white;
 }
+
+.footer-text {
+    -fx-text-fill: white;
+}
+
+.background {
+    -fx-background-color: #FFEB3B;
+}

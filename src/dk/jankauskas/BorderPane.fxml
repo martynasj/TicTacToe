@@ -14,7 +14,7 @@
       <StackPane prefHeight="570.0" prefWidth="570.0" />
    </center>
    <top>
-      <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <ToolBar prefHeight="40.0" prefWidth="200.0" styleClass="menu-bar" BorderPane.alignment="CENTER">
         <items>
           <Button fx:id="newGameBtn" mnemonicParsing="false" text="New Game" />
             <Button fx:id="saveGameBtn" mnemonicParsing="false" text="Save Game" />
