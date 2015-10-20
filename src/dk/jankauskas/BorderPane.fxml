@@ -6,11 +6,20 @@
 <?import javafx.scene.layout.*?>
 <?import java.net.URL?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.jankauskas.BorderPaneController">
     <stylesheets>
         <URL value="@css/borderpane.css" />
     </stylesheets>
    <center>
       <StackPane prefHeight="570.0" prefWidth="570.0" />
    </center>
+   <top>
+      <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <items>
+          <Button fx:id="newGameBtn" mnemonicParsing="false" text="New Game" />
+            <Button fx:id="saveGameBtn" mnemonicParsing="false" text="Save Game" />
+            <Button fx:id="loadGameBtn" mnemonicParsing="false" text="Load Game" />
+        </items>
+      </ToolBar>
+   </top>
 </BorderPane>

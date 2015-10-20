@@ -11,5 +11,6 @@
 }
 
 .button .text {
-    -fx-font-size: 30px;
+    -fx-font-family: Quicksand;
+    -fx-font-size: 8em;
 }

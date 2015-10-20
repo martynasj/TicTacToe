@@ -1,6 +1,8 @@
 package dk.jankauskas;
 
 import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -14,13 +16,9 @@ public class Receiver implements Runnable {
     private DatagramSocket socket;
     private int bufferSize;
     private static GameBoardController gameBoardController;
-    private Board board;
-
-    // Sender details
 
     public Receiver(int port) {
         try {
-            this.board = Main.getBoard();
             this.port = port;
             this.socket = new DatagramSocket(port);
             this.bufferSize = 1024;
@@ -34,10 +32,11 @@ public class Receiver implements Runnable {
     public void run() {
         System.out.println("Thread is starting to receive bytes");
 
-        byte[] buf = new byte[bufferSize];
-        DatagramPacket packet = new DatagramPacket(buf, buf.length);
+
         try {
             while (true) {
+                byte[] buf = new byte[bufferSize];
+                DatagramPacket packet = new DatagramPacket(buf, buf.length);
                 socket.receive(packet);
                 readMessage(packet.getData());
             }
@@ -57,9 +56,24 @@ public class Receiver implements Runnable {
                 int position = Integer.parseInt(msg[1]);
                 // Otherwise I get "not in FX thread exception..."
                 Platform.runLater(() -> {
-                    board.setCellValue(position, Main.getOpponent().getPlayerSymbol());
+                    Main.getBoard().setCellValue(position, Main.getOpponent().getPlayerSymbol());
                     gameBoardController.setButtonsDisabled(false);
                 });
+                break;
+            case "NEW" :
+                Platform.runLater(() -> {
+                    Main.setBoard(new Board());
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("GameBoard.fxml"));
+                    Pane gameBoardPane = null;
+                    try {
+                        gameBoardPane = loader.load();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    Main.stackPane.getChildren().add(gameBoardPane);
+                    Main.setGameBoardController(loader.getController());
+                });
+                break;
         }
     }
 

@@ -18,7 +18,6 @@ public class GameBoardController {
 
     Board board;
     ArrayList<Button> buttons;
-    private int sendPort;
     private Player player;
 
     public void initialize() {
@@ -110,23 +109,16 @@ public class GameBoardController {
         try {
             DatagramSocket socket = new DatagramSocket();
             InetAddress address = InetAddress.getLocalHost();
-            int port = getSendPort();
+            int port = Main.getSendPort();
 
             byte[] buf;
             buf = ("SHOOT " + btnId).getBytes();
             DatagramPacket packet = new DatagramPacket(buf, buf.length, address, port);
             socket.send(packet);
+            socket.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
-
-    // TODO could be improved
-    public int getSendPort() {
-        if (Main.receiver.getPort() == 5000) {
-            return 6000;
-        } else return 5000;
-    }
 }

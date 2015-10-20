@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -26,6 +27,8 @@ public class Main extends Application {
     //todo better way of changing stackpane scenes
     public void start(Stage primaryStage) {
         try {
+            Font.loadFont(Main.class.getResource("Quicksand-Regular.ttf").toExternalForm(), 10);
+
             FXMLLoader loader1 = new FXMLLoader(getClass().getResource("BorderPane.fxml"));
             FXMLLoader loader2 = new FXMLLoader(getClass().getResource("IntroPane.fxml"));
             BorderPane borderPane = loader1.load();
@@ -51,7 +54,6 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
-        board = new Board();
         int port = Integer.parseInt(args[0]);
         appTitle = args[1];
 
@@ -75,6 +77,10 @@ public class Main extends Application {
         }
     }
 
+    public static void setBoard(Board board) {
+        Main.board = board;
+    }
+
     public static Board getBoard() {
         return board;
     }
@@ -93,5 +99,12 @@ public class Main extends Application {
 
     public static GameBoardController getGameBoardController() {
         return gameBoardController;
+    }
+
+    // TODO could be improved
+    public static int getSendPort() {
+        if (receiver.getPort() == 5000) {
+            return 6000;
+        } else return 5000;
     }
 }
