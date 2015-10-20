@@ -68,11 +68,11 @@ public class Main extends Application {
     private static void createPlayers() {
         // Assigns player and opponent symbols based on program args
         if (appTitle.equals("App1")) {
-            player = new Player("X");
-            opponent = new Player("O");
+            player = new Player(Mark.X);
+            opponent = new Player(Mark.O);
         } else {
-            player = new Player("O");
-            opponent = new Player("X");
+            player = new Player(Mark.O);
+            opponent = new Player(Mark.X);
 
         }
     }

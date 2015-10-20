@@ -10,6 +10,7 @@ import javafx.scene.layout.TilePane;
 import java.io.IOException;
 import java.net.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class GameBoardController {
 
@@ -33,7 +34,7 @@ public class GameBoardController {
 
 
         // Executes every time there's a change in the cells array list
-        board.getCells().addListener((ListChangeListener<String>) (c) -> {
+        board.getCells().addListener((ListChangeListener<Mark>) (c) -> {
             while (c.next()) {
                 //todo win can only occur after last move, so it's enough to check based on the last position placed
                 recalculateButtons();
@@ -49,6 +50,8 @@ public class GameBoardController {
                     board.setCellValue(Integer.parseInt(btn.getId()), player.getPlayerSymbol());
                     sendShoot(btn.getId());
                     setButtonsDisabled(true);
+                } else {
+                    System.out.println("Cell not available");
                 }
             });
         }
@@ -57,8 +60,9 @@ public class GameBoardController {
 
     // todo
     private void checkWin() {
-        if (board.getWinner() != null) {
-            System.out.println(board.getWinner() + " won!");
+        Mark winner = board.getWinner();
+        if (winner != Mark.EMPTY) {
+            System.out.println(winner + " won!");
         } else if (board.isFull()) {
             System.out.println("It's a tie");
         }
@@ -98,8 +102,8 @@ public class GameBoardController {
     // Recalculates all buttons based on board cells arraylist
     public void recalculateButtons() {
         for (int i = 0; i < board.getSize(); i++) {
-            String cellMark = board.getCellValue(i);
-            buttons.get(i).setText(cellMark);
+            Mark cellMark = board.getCellValue(i);
+            buttons.get(i).setText(cellMark.toString());
         }
     }
 

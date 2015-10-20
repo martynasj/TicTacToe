@@ -2,18 +2,18 @@ package dk.jankauskas;
 
 public class Player {
 
-    private String playerSymbol;
+    private Mark playerSymbol;
 
-    public Player(String playerSymbol) {
+    public Player(Mark playerSymbol) {
         this.playerSymbol = playerSymbol;
         System.out.println("Player: " + playerSymbol);
     }
 
-    public String getPlayerSymbol() {
+    public Mark getPlayerSymbol() {
         return playerSymbol;
     }
 
-    public void setPlayerSymbol(String playerSymbol) {
+    public void setPlayerSymbol(Mark playerSymbol) {
         this.playerSymbol = playerSymbol;
     }
 
