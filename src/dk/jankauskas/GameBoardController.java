@@ -35,7 +35,7 @@ public class GameBoardController {
         // Executes every time there's a change in the cells array list
         board.getCells().addListener((ListChangeListener<String>) (c) -> {
             while (c.next()) {
-                // win can only occur after last move, so it's enough to check based on the last position placed
+                //todo win can only occur after last move, so it's enough to check based on the last position placed
                 recalculateButtons();
                 checkWin();
             }
@@ -45,9 +45,11 @@ public class GameBoardController {
         // setOnAction on all buttons
         for (Button btn : buttons) {
             btn.setOnAction(event -> {
-                board.setCellValue(Integer.parseInt(btn.getId()), player.getPlayerSymbol());
-                sendShoot(btn.getId());
-                setButtonsDisabled(true);
+                if (board.cellAvailable(Integer.parseInt(btn.getId()))) {
+                    board.setCellValue(Integer.parseInt(btn.getId()), player.getPlayerSymbol());
+                    sendShoot(btn.getId());
+                    setButtonsDisabled(true);
+                }
             });
         }
 
@@ -55,8 +57,8 @@ public class GameBoardController {
 
     // todo
     private void checkWin() {
-        if (board.isWon()) {
-            showGameOverPane();
+        if (board.getWinner() != null) {
+            System.out.println(board.getWinner() + " won!");
         } else if (board.isFull()) {
             System.out.println("It's a tie");
         }
